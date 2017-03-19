@@ -1,0 +1,5 @@
+
+# ignoring virtual environment files
+/tfenv
+.env
+/.idea
