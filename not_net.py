@@ -11,8 +11,11 @@ not_inputs = [
 
 not_outputs = [
     [1.],
-    [-1.],
+    [-1.]
 ]
+
+x_ = tf.placeholder(tf.float32, shape=[2,1], name='X-inputs')
+y_ = tf.placeholder(tf.float32, shape=[2,1], name='Y-outputs')
 
 not_weights = tf.Variable(tf.random_normal([1,1]))
 not_bias = tf.Variable(tf.zeros([1]))
@@ -29,7 +32,7 @@ alpha = 0.05
 train_step = tf.train.GradientDescentOptimizer(alpha).minimize(cost)
 
 #max number of iterations if it fails to converge to target_error
-current_error, target_error = 100, 0.001
+current_error, target_error = 100, 0.00001
 current_epoch, max_epochs = 0, 1500
 
 #now that we have sup up network, train it
@@ -47,7 +50,7 @@ with tf.Session() as sess:
             print( 'CHECKING PROGRESS')
             print('epoch: ', current_epoch)
             print('cost: ', sess.run(cost))
-            # print ('hypothesis: ', sess.run(hypothesis, feed_dict=zip(and_inputs, and_outputs)))
+            print ('hypothesis: ', sess.run(hypothesis, feed_dict={x_: not_inputs, y_: not_outputs}))
             print('Weights: ', sess.run(not_weights))
             print('Bias: ', sess.run(not_bias))
 

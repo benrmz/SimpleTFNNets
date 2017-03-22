@@ -18,6 +18,8 @@ or_outputs = [
     [1.],
     [0.]
 ]
+x_ = tf.placeholder(tf.float32, shape=[4,2], name='X-inputs')
+y_ = tf.placeholder(tf.float32, shape=[4,1], name='Y-outputs')
 
 or_weights = tf.Variable(tf.random_normal([2,1]))
 # or_bias = tf.Variable(tf.zeros([1]))
@@ -51,7 +53,7 @@ with tf.Session() as sess:
             print( 'CHECKING PROGRESS')
             print('epoch: ', current_epoch)
             print('cost: ', sess.run(cost))
-            # print ('hypothesis: ', sess.run(hypothesis, feed_dict=zip(and_inputs, and_outputs)))
+            print ('hypothesis: ', sess.run(hypothesis, feed_dict={x_: or_inputs, y_: or_outputs}))
             print('Weights: ', sess.run(or_weights))
             # print('Bias: ', sess.run(or_bias))
 

@@ -13,17 +13,20 @@ import tensorflow as tf
 # Truth Table as vectors/matrices
 and_inputs = [
     [1., 1.],
-    [1., 0.],
-    [0., 1.],
-    [0., 0.]
+    [1., -1.],
+    [-1., 1.],
+    [-1., -1.]
 ]
 
 and_outputs = [
     [1.],
-    [0.],
-    [0.],
-    [0.]
+    [-1.],
+    [-1.],
+    [-1.]
 ]
+
+x_ = tf.placeholder(tf.float32, shape=[4,2], name='X-inputs')
+y_ = tf.placeholder(tf.float32, shape=[4,1], name='Y-outputs')
 
 and_weights = tf.Variable(tf.random_normal([2,1]))
 and_bias = tf.Variable(tf.zeros([1]))
@@ -40,8 +43,8 @@ alpha = 0.05
 train_step = tf.train.GradientDescentOptimizer(alpha).minimize(cost)
 
 #max number of iterations if it fails to converge to target_error
-current_error, target_error = 100, 0.05
-current_epoch, max_epochs = 0, 1500
+current_error, target_error = 100, 0.001
+current_epoch, max_epochs = 0, 10000
 
 #now that we have sup up network, train it
 with tf.Session() as sess:
@@ -57,7 +60,7 @@ with tf.Session() as sess:
             print( 'CHECKING PROGRESS')
             print('epoch: ', current_epoch)
             print('cost: ', sess.run(cost))
-            # print ('hypothesis: ', sess.run(hypothesis, feed_dict=zip(and_inputs, and_outputs)))
+            print ('hypothesis: ', sess.run(hypothesis, feed_dict={x_:and_inputs, y_:and_outputs}))
             print('Weights: ', sess.run(and_weights))
             print('Bias: ', sess.run(and_bias))
 
