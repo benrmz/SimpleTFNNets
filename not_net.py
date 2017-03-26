@@ -35,16 +35,15 @@ train_step = tf.train.GradientDescentOptimizer(alpha).minimize(cost)
 current_error, target_error = 100, 0.00001
 current_epoch, max_epochs = 0, 1500
 
-#now that we have sup up network, train it
-#the weight should become negative, flipping the output
+#the weight should become negative, creating NOT operation
 with tf.Session() as sess:
-    #initialze tf vars
+
     sess.run(tf.global_variables_initializer())
 
     while current_error > target_error and current_epoch < max_epochs:
         current_epoch += 1
         current_error, t = sess.run([cost, train_step])
-        #check the progress of the training:
+
         if current_epoch % 100 == 0:
             print(" ")
             print( 'CHECKING PROGRESS')

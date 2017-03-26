@@ -45,7 +45,7 @@ train_step = tf.train.GradientDescentOptimizer(alpha).minimize(cost)
 current_error, target_error = 100, 0.001
 current_epoch, max_epochs = 0, 10000
 
-#now that we have sup up network, train it
+
 with tf.Session() as sess:
     #initialze tf vars
     sess.run(tf.global_variables_initializer())
