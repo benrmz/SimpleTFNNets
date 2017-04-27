@@ -3,7 +3,7 @@ import tensorflow as tf
 
 ########### NAND operation ###############
 
-# Truth Table as vectors/matrices
+# Truth Table as input X, output y
 nand_inputs = [
     [0., 0.],
     [0., 1.],
@@ -45,8 +45,11 @@ train_step = tf.train.GradientDescentOptimizer(alpha).minimize(cost)
 current_error, target_error = 100, 0.001
 current_epoch, max_epochs = 0, 10000
 
+#saving model's weights and biases
+saver = tf.train.Saver()
 
-with tf.Session() as sess:
+
+with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
     #initialze tf vars
     sess.run(tf.global_variables_initializer())
 
@@ -59,13 +62,13 @@ with tf.Session() as sess:
             print( 'CHECKING PROGRESS')
             print('epoch: ', current_epoch)
             print('cost: ', sess.run(cost))
-            print ('hypothesis: ', sess.run(hypothesis, feed_dict={x_:nand_inputs, y_:nand_outputs}))
+            print('hypothesis: ', sess.run(hypothesis, feed_dict={x_:nand_inputs, y_:nand_outputs}))
             print('Theta1 Weights: ', sess.run(theta1))
             print('Bias1 : ', sess.run(bias1))
             print('Theta2 Weights: ', sess.run(theta2))
             print('Bias2 : ', sess.run(bias2))
 
 
-
+    saver.save(sess, './checkpoints/nand.ckpt', write_meta_graph=False, write_state=False)
     sess.close()
 
